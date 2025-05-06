@@ -13,7 +13,7 @@ def extract_region_from_arn(arn):
     return "us-east-1"
 
 # FastAPIサーバーのURL（環境変数で指定するのが推奨）
-FASTAPI_URL = os.environ.get("FASTAPI_ENDPOINT", "https://127.0.0.1.8000/chat")
+FASTAPI_URL = os.environ.get("FASTAPI_ENDPOINT", "https://80e4-34-124-200-155.ngrok-free.app")
 
 # HTTPクライアント
 http = urllib3.PoolManager()
