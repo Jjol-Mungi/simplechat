@@ -100,7 +100,7 @@ export class BedrockChatbotStack extends cdk.Stack {
     // CloudFront Distribution
     const distribution = new cloudfront.Distribution(this, 'Distribution', {
       defaultBehavior: {
-        origin: new origins.S3Origin(websiteBucket),
+        origin: new origins.S3BucketOrigin(websiteBucket),
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
         cachedMethods: cloudfront.CachedMethods.CACHE_GET_HEAD_OPTIONS,
@@ -164,7 +164,7 @@ export class BedrockChatbotStack extends cdk.Stack {
     // 明示的な依存関係を追加
     const cfnChatFunction = chatFunction.node.defaultChild as lambda.CfnFunction;
     const cfnLambdaRole = lambdaRole.node.defaultChild as iam.CfnRole;
-    cfnChatFunction.addDependsOn(cfnLambdaRole);
+    cfnChatFunction.addDependency(cfnLambdaRole);
 
     // API Gateway with Cognito Authorizer
     const api = new apigateway.RestApi(this, 'ChatbotApi', {
@@ -390,7 +390,7 @@ export class BedrockChatbotStack extends cdk.Stack {
     // 明示的な依存関係を追加
     const cfnConfigFunction = configGeneratorFunction.node.defaultChild as lambda.CfnFunction;
     const cfnConfigRole = configGeneratorRole.node.defaultChild as iam.CfnRole;
-    cfnConfigFunction.addDependsOn(cfnConfigRole);
+    cfnConfigFunction.addDependency(cfnConfigRole);
     
     // カスタムリソースプロバイダー
     const configProvider = new cr.Provider(this, 'ConfigProvider', {

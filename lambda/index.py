@@ -22,13 +22,13 @@ def lambda_handler(event, context):
     try:
         print("Received event:", json.dumps(event))
 
-        # ユーザー情報（任意でログ出力）
+        #Cognitoで認証されたユーザー情報を取得
         user_info = None
         if 'requestContext' in event and 'authorizer' in event['requestContext']:
             user_info = event['requestContext']['authorizer']['claims']
             print(f"Authenticated user: {user_info.get('email') or user_info.get('cognito:username')}")
 
-        # リクエストボディ取得
+        # リクエストボディの解析
         body = json.loads(event['body'])
         message = body['message']
         conversation_history = body.get('conversationHistory', [])
